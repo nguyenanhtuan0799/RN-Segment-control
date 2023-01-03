@@ -6,13 +6,18 @@ export interface RefObject {
 
 export interface Props<T> {
   segments: T[];
-  iconField?: string;
-  labelField?: string;
+  iconField?: keyof T;
+  labelField?: keyof T;
   duration?: number;
   activeTab: number;
   onPress?: (value: any, index: number) => void;
-  style?: ViewStyle | TextStyle | any;
-  activeStyle?: ViewStyle | any;
-  textStyle?: TextStyle | any;
-  textActiveStyle?: TextStyle | any;
+  style?: ViewStyle | TextStyle;
+  activeStyle?: ViewStyle;
+  textStyle?: TextStyle;
+  textActiveStyle?: TextStyle;
+}
+
+export interface ObjExtends {
+  title: string;
+  icon: any | undefined;
 }
