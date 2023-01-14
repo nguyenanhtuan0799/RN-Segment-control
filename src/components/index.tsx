@@ -9,141 +9,157 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import type { ObjExtends, Props, RefObject } from 'src/types/type';
+import type { Props, RefObject } from 'src/types/type';
 
-function SegmentControl<T extends ObjExtends>(
-  {
-    segments,
-    activeTab = 0,
-    style,
-    activeStyle,
-    textStyle,
-    onPress,
-    textActiveStyle,
-    duration = 300,
-    iconField = 'icon',
-    labelField = 'title',
-  }: Props<T>,
-  ref: Ref<RefObject & any>
-) {
-  const [segmentItemWidth, setSegmentItemWidth] = useState<number>(0);
+const SegmentControl = forwardRef(
+  <T extends unknown>(
+    {
+      segments,
+      activeTab = 0,
+      style,
+      activeStyle,
+      textStyle,
+      onPress,
+      textActiveStyle,
+      duration = 300,
+      iconField,
+      labelField,
+    }: Props<T>,
+    ref: Ref<RefObject & any>
+  ) => {
+    const [segmentItemWidth, setSegmentItemWidth] = useState<number>(0);
+    const [active, setActive] = useState<number>(activeTab);
 
-  const widthSegment = useCallback(
-    (
-      segmentArr: T[],
-      width: string | number | undefined = Dimensions.get('window').width
-    ): { width: number } => {
-      if (typeof width === 'number') {
+    const widthSegment = useCallback(
+      (
+        segmentArr: T[],
+        width: string | number | undefined = Dimensions.get('window').width
+      ): { width: number } => {
+        if (typeof width === 'number') {
+          return {
+            width: width / segmentArr.length,
+          };
+        } else if (typeof width === 'string') {
+          console.warn(
+            '=>>>SegmentControl<<<= : Segment not supported for size string'
+          );
+          return {
+            width: 0,
+          };
+        } else {
+          return { width: 0 };
+        }
+      },
+      []
+    );
+    const heightSegment = (height: string | number | undefined) => {
+      if (typeof height === 'number') {
         return {
-          width: width / segmentArr.length,
+          height: height - 4,
         };
-      } else if (typeof width === 'string') {
-        const newWidth = width.substring(0, width.length - 1);
-        return {
-          width: Number.parseInt(newWidth, 10) / segmentArr.length,
-        };
+      } else if (typeof height === 'string') {
+        console.warn(
+          '=>>>SegmentControl<<<= : Segment not supported for size string'
+        );
+        return { height: 0 };
       } else {
-        return { width: 0 };
+        return { height: 0 };
       }
-    },
-    []
-  );
-  const heightSegment = (height: string | number | undefined) => {
-    if (typeof height === 'number') {
-      return {
-        height: height - 4,
-      };
-    } else if (typeof height === 'string') {
-      return { marginTop: 2, marginBottom: 2 };
-    } else {
-      return { height: 0 };
-    }
-  };
+    };
 
-  const fadeAnim = useRef(new Animated.Value(0)).current;
+    const fadeAnim = useRef(new Animated.Value(0)).current;
 
-  useImperativeHandle(ref, () => ({
-    updateActive: (index: number = 0) => {
-      return index;
-    },
-  }));
+    useImperativeHandle(ref, () => ({
+      updateActive: (index: number = 0) => {
+        if (index <= segments.length - 1) {
+          setActive(index);
+          translateXAnim(index);
+        } else {
+          console.warn(
+            '=>>>SegmentControl<<<= : Active cannot exceed the length of the array'
+          );
+        }
+      },
+    }));
 
-  const translateXAnim = useCallback(
-    (index: number) => {
-      Animated.timing(fadeAnim, {
-        toValue: segmentItemWidth * index,
-        easing: Easing.out(Easing.quad),
-        duration: duration,
-        useNativeDriver: true,
-      }).start();
-    },
-    [duration, fadeAnim, segmentItemWidth]
-  );
+    const translateXAnim = useCallback(
+      (index: number) => {
+        Animated.timing(fadeAnim, {
+          toValue: segmentItemWidth * index,
+          easing: Easing.out(Easing.quad),
+          duration: duration,
+          useNativeDriver: false,
+        }).start();
+      },
+      [duration, fadeAnim, segmentItemWidth]
+    );
 
-  React.useEffect(() => {
-    const widthFirst = widthSegment(segments, style?.width);
-    const { width } = widthFirst;
-    setSegmentItemWidth(width);
-  }, [segments, style?.width, widthSegment]);
+    React.useEffect(() => {
+      const { width } = widthSegment(segments, style?.width);
+      setSegmentItemWidth(width);
+    }, [segments, style?.width, widthSegment]);
 
-  React.useEffect(() => {
-    if (activeTab > 0) {
-      translateXAnim(activeTab);
-    }
-  }, [activeTab, translateXAnim]);
+    React.useEffect(() => {
+      if (activeTab <= segments.length - 1) {
+        translateXAnim(activeTab);
+        setActive(activeTab);
+      } else {
+        console.warn(
+          '=>>>SegmentControl<<<= : Active cannot exceed the length of the array'
+        );
+      }
+    }, [activeTab, translateXAnim, segments]);
 
-  return (
-    <View style={[styles.container, { ...style }]}>
-      <View style={styles.viewWrap}>
-        <View style={styles.boxView}>
-          {segments.map((s, i) => {
-            return (
-              <TouchableWithoutFeedback
-                ref={ref}
-                key={i}
-                onPress={() => {
-                  const value = {
-                    ...s,
-                    name: s[labelField as keyof typeof s],
-                    index: i,
-                  };
-                  translateXAnim(i);
-                  typeof onPress === 'function' && onPress(value, i);
-                }}
-              >
-                <View
-                  style={[
-                    styles.button,
-                    widthSegment(segments, style?.width),
-                    heightSegment(style?.height),
-                  ]}
+    return (
+      <View style={[styles.container, { ...style }]}>
+        <View style={styles.viewWrap}>
+          <View style={styles.boxView}>
+            {segments.map((s, i) => {
+              return (
+                <TouchableWithoutFeedback
+                  ref={ref}
+                  key={i}
+                  onPress={() => {
+                    const value = s;
+                    translateXAnim(i);
+                    setActive(i);
+                    typeof onPress === 'function' && onPress(value, i);
+                  }}
                 >
-                  <View key={i}>
-                    {s[iconField as keyof typeof s]}
-                    <Text style={activeTab === i ? textActiveStyle : textStyle}>
-                      {s[labelField as keyof typeof s]}
-                    </Text>
+                  <View
+                    style={[
+                      styles.button,
+                      widthSegment(segments, style?.width),
+                      heightSegment(style?.height),
+                    ]}
+                  >
+                    <View key={i} style={styles.box}>
+                      {s[iconField as keyof typeof s]}
+                      <Text style={active === i ? textActiveStyle : textStyle}>
+                        {s[labelField as keyof typeof s]}
+                      </Text>
+                    </View>
                   </View>
-                </View>
-              </TouchableWithoutFeedback>
-            );
-          })}
+                </TouchableWithoutFeedback>
+              );
+            })}
+          </View>
+          <Animated.View
+            style={[
+              styles.animation,
+              styles.boxAnimated,
+              {
+                transform: [{ translateX: fadeAnim }],
+                width: segmentItemWidth - 8,
+              },
+              activeStyle,
+            ]}
+          />
         </View>
-        <Animated.View
-          style={[
-            styles.animation,
-            styles.boxAnimated,
-            {
-              transform: [{ translateX: fadeAnim }],
-              width: segmentItemWidth - 8,
-            },
-            activeStyle,
-          ]}
-        />
       </View>
-    </View>
-  );
-}
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   container: { backgroundColor: '#dddddd' },
@@ -188,4 +204,6 @@ const styles = StyleSheet.create({
   },
 });
 
-export default forwardRef(SegmentControl);
+export default SegmentControl as <T extends unknown>(
+  props: Props<T> & { ref: Ref<RefObject & any> }
+) => JSX.Element;

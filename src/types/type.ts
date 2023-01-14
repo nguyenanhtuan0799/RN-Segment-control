@@ -9,15 +9,10 @@ export interface Props<T> {
   iconField?: keyof T;
   labelField?: keyof T;
   duration?: number;
-  activeTab: number;
-  onPress?: (value: any, index: number) => void;
-  style?: ViewStyle | TextStyle;
+  activeTab?: number;
+  onPress?: (value: T, index: number) => void;
+  style?: ViewStyle;
   activeStyle?: ViewStyle;
   textStyle?: TextStyle;
   textActiveStyle?: TextStyle;
-}
-
-export interface ObjExtends {
-  title: string;
-  icon: any | undefined;
 }

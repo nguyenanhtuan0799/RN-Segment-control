@@ -1,18 +1,55 @@
 import * as React from 'react';
 
-import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'react-navtive-segment-control';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { RefObject, SegmentControl } from 'react-navtive-segment-control';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
-
-  React.useEffect(() => {
-    multiply(3, 7).then(setResult);
-  }, []);
-
+  const [activeTab, setActiveTab] = React.useState<number>(0);
+  const segmentRef = React.useRef<RefObject>();
+  const data = [
+    {
+      title: 'EN',
+      id: 1,
+    },
+    {
+      title: 'VN',
+      id: 2,
+    },
+  ];
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <SegmentControl
+        ref={segmentRef}
+        segments={data}
+        activeTab={activeTab}
+        style={styles.segment}
+        labelField="title"
+        onPress={(value) => {
+          console.log(value);
+        }}
+      />
+
+      <TouchableOpacity
+        onPress={() => {
+          segmentRef.current?.updateActive(1);
+        }}
+      >
+        <Text>btn</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          setActiveTab(1);
+        }}
+      >
+        <Text>next</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          setActiveTab(0);
+        }}
+      >
+        <Text>prev</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -23,9 +60,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  box: {
-    width: 60,
-    height: 60,
-    marginVertical: 20,
+  segment: {
+    width: '100%',
+    height: 50,
+    borderRadius: 10,
   },
 });
