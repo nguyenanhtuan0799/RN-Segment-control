@@ -23,7 +23,6 @@ export default function App() {
         segments={data}
         activeTab={activeTab}
         style={styles.segment}
-        labelField="title"
         onPress={(value) => {
           console.log(value);
         }}
@@ -61,7 +60,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   segment: {
-    width: '100%',
+    width: 100,
     height: 50,
     borderRadius: 10,
   },

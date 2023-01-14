@@ -16,3 +16,8 @@ export interface Props<T> {
   textStyle?: TextStyle;
   textActiveStyle?: TextStyle;
 }
+
+export interface ObjExtend {
+  title?: '';
+  icon?: '';
+}

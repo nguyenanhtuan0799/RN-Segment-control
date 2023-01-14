@@ -9,10 +9,10 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import type { Props, RefObject } from 'src/types/type';
+import type { ObjExtend, Props, RefObject } from 'src/types/type';
 
 const SegmentControl = forwardRef(
-  <T extends unknown>(
+  <T extends ObjExtend>(
     {
       segments,
       activeTab = 0,
@@ -22,8 +22,8 @@ const SegmentControl = forwardRef(
       onPress,
       textActiveStyle,
       duration = 300,
-      iconField,
-      labelField,
+      iconField = 'icon',
+      labelField = 'title',
     }: Props<T>,
     ref: Ref<RefObject & any>
   ) => {
