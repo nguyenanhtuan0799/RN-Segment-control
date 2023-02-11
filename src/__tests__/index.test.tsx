@@ -1,6 +1,6 @@
 import React from 'react';
 import Segment from '../components/index';
-import { fireEvent, render, act, cleanup } from '@testing-library/react-native';
+import { fireEvent, render, cleanup } from '@testing-library/react-native';
 import { TouchableWithoutFeedback } from 'react-native';
 
 const SegmentComponent = ({
