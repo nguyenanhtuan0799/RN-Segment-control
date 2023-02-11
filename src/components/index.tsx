@@ -24,6 +24,7 @@ const SegmentControl = forwardRef(
       duration = 300,
       iconField = 'icon',
       labelField = 'title',
+      testID,
     }: Props<T>,
     ref: Ref<RefObject & any>
   ) => {
@@ -111,7 +112,7 @@ const SegmentControl = forwardRef(
     }, [activeTab, translateXAnim, segments]);
 
     return (
-      <View style={[styles.container, { ...style }]}>
+      <View style={[styles.container, { ...style }]} testID={testID}>
         <View style={styles.viewWrap}>
           <View style={styles.boxView}>
             {segments.map((s, i) => {

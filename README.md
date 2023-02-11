@@ -159,17 +159,6 @@ updateActive(index)
 | -------- | -------- | ------- |
 | function | No       |         |
 
-segment : {title:string,icon?:JSX.Element}[];
-activeTab: index của mảng segment,
-style: style cho cả segment (width và height chỉ được số)
-onpress: function (value:{name,index})
-activeStyle: style cho tab đã active
-textStyle: style cho text của segment
-textActiveStyle: style cho text active của segment
-
-method ref :
-updateActive(index) : index của tab , cập nhật lại tab
-
 ## License
 
 MIT

@@ -15,6 +15,7 @@ export interface Props<T> {
   activeStyle?: ViewStyle;
   textStyle?: TextStyle;
   textActiveStyle?: TextStyle;
+  testID?: string;
 }
 
 export interface ObjExtend {
