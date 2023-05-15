@@ -14,7 +14,7 @@ import type { ObjExtend, Props, RefObject } from 'src/types/type';
 const SegmentControl = forwardRef(
   <T extends ObjExtend>(
     {
-      segments,
+      segments = [],
       activeTab = 0,
       style,
       activeStyle,
@@ -27,7 +27,7 @@ const SegmentControl = forwardRef(
       testID,
     }: Props<T>,
     ref: Ref<RefObject & any>
-  ) => {
+  ) => {``
     const [segmentItemWidth, setSegmentItemWidth] = useState<number>(0);
     const [active, setActive] = useState<number>(activeTab);
 
@@ -115,7 +115,7 @@ const SegmentControl = forwardRef(
       <View style={[styles.container, { ...style }]} testID={testID}>
         <View style={styles.viewWrap}>
           <View style={styles.boxView}>
-            {segments.map((s, i) => {
+            {segments?.map((s, i) => {
               return (
                 <TouchableWithoutFeedback
                   ref={ref}
@@ -206,5 +206,5 @@ const styles = StyleSheet.create({
 });
 
 export default SegmentControl as <T extends unknown>(
-  props: Props<T> & { ref: Ref<RefObject & any> }
+  props: Props<T> & { ref?: Ref<RefObject & any> }
 ) => JSX.Element;
