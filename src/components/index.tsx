@@ -9,7 +9,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import type { ObjExtend, Props, RefObject } from 'src/types/type';
+import type { ObjExtend, Props, RefObject } from '../types/type';
 
 const SegmentControl = forwardRef(
   <T extends ObjExtend>(
