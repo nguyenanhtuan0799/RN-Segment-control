@@ -22,12 +22,13 @@ const SegmentControl = forwardRef(
       onPress,
       textActiveStyle,
       duration = 300,
-      iconField = 'icon',
+      iconField,
       labelField = 'title',
       testID,
     }: Props<T>,
     ref: Ref<RefObject & any>
-  ) => {``
+  ) => {
+    ``;
     const [segmentItemWidth, setSegmentItemWidth] = useState<number>(0);
     const [active, setActive] = useState<number>(activeTab);
 
