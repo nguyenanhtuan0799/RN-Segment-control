@@ -49,12 +49,12 @@ const SegmentControl = forwardRef(
             width: 0,
           };
         } else {
-          return { width: 0 };
+          return { width: Dimensions.get('window').width };
         }
       },
       []
     );
-    const heightSegment = (height: string | number | undefined) => {
+    const heightSegment = (height: string | number | undefined = 60) => {
       if (typeof height === 'number') {
         return {
           height: height - 4,
@@ -65,7 +65,7 @@ const SegmentControl = forwardRef(
         );
         return { height: 0 };
       } else {
-        return { height: 0 };
+        return { height: 60 };
       }
     };
 
