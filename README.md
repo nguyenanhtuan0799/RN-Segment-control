@@ -1,15 +1,15 @@
-# react-navtive-segment-control
+# @segment/react-native-segment-control
 
 Segment Control RN
 
 ## Installation
 
 ```sh
-npm install react-navtive-segment-control
+npm install @segment/react-native-segment-control
 ```
 
 ```sh
-yarn add react-navtive-segment-control
+yarn add @segment/react-native-segment-control
 ```
 
 ## Usage
@@ -17,7 +17,7 @@ yarn add react-navtive-segment-control
 - Import Component
 
 ```sh
-import { SegmentControl } from'react-navtive-segment-control';
+import { SegmentControl } from '@segment/react-native-segment-control';
 ```
 
 ```sh
@@ -34,7 +34,7 @@ import { SegmentControl } from'react-navtive-segment-control';
 
 ```
 import react, {useState}from 'react'
-import { RefObject, SegmentControl } from 'react-navtive-segment-control';
+import { RefObject, SegmentControl } from '@segment/react-native-segment-control';
 
 const data = [
   {label : "Left", icon : "left"},

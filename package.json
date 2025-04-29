@@ -1,5 +1,5 @@
 {
-  "name": "react-native-segment-control",
+  "name": "@segment/react-native-segment-control",
   "version": "0.3.5",
   "description": "Segment Control for React Native",
   "main": "lib/commonjs/index",
