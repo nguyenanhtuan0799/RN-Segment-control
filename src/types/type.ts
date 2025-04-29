@@ -8,6 +8,7 @@ export interface Props<T> {
   segments: T[];
   iconField?: keyof T;
   labelField?: keyof T;
+  iconActiveField?: keyof T;
   duration?: number;
   activeTab?: number;
   onPress?: (value: T, index: number) => void;

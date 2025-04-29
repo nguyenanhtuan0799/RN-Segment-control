@@ -8,12 +8,14 @@ export default function App() {
   const segmentRef = React.useRef<RefObject>();
   const data = [
     {
-      title: 'EN',
       id: 1,
+      icon: <Text>EN</Text>,
+      iconActive: <Text>ENActive</Text>,
     },
     {
-      title: 'VN',
       id: 2,
+      icon: <Text>VN</Text>,
+      iconActive: <Text>VNActive</Text>,
     },
   ];
   return (
@@ -21,6 +23,8 @@ export default function App() {
       <SegmentControl
         ref={segmentRef}
         segments={data}
+        iconField="icon"
+        iconActiveField="iconActive"
         activeTab={activeTab}
         style={styles.segment}
         onPress={(value) => {

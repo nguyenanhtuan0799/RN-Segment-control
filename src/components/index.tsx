@@ -25,6 +25,7 @@ const SegmentControl = forwardRef(
       iconField,
       labelField = 'title',
       testID,
+      iconActiveField,
     }: Props<T>,
     ref: Ref<RefObject & any>
   ) => {
@@ -136,7 +137,11 @@ const SegmentControl = forwardRef(
                     ]}
                   >
                     <View key={i} style={styles.box}>
-                      {s[iconField as keyof typeof s]}
+                      {iconActiveField
+                        ? active === i
+                          ? s[iconActiveField as keyof typeof s]
+                          : s[iconField as keyof typeof s]
+                        : s[iconField as keyof typeof s]}
                       <Text style={active === i ? textActiveStyle : textStyle}>
                         {s[labelField as keyof typeof s]}
                       </Text>
