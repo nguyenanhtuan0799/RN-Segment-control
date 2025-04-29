@@ -1,6 +1,6 @@
 {
   "name": "react-navtive-segment-control",
-  "version": "1.0",
+  "version": "0.3.4",
   "description": "test",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
