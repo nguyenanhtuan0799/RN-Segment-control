@@ -58,7 +58,7 @@ const SegmentControl = forwardRef(
     const heightSegment = (height: string | number | undefined = 60) => {
       if (typeof height === 'number') {
         return {
-          height: height - 4,
+          height: height - 6,
         };
       } else if (typeof height === 'string') {
         console.warn(
@@ -157,7 +157,7 @@ const SegmentControl = forwardRef(
               styles.boxAnimated,
               {
                 transform: [{ translateX: fadeAnim }],
-                width: segmentItemWidth - 8,
+                width: segmentItemWidth - 10,
               },
               activeStyle,
             ]}

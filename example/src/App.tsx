@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { RefObject, SegmentControl } from 'react-native-segment-control-ui';
 
 export default function App() {
   const [activeTab, setActiveTab] = React.useState<number>(0);
